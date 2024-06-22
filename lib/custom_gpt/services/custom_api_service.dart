@@ -6,12 +6,15 @@ import 'package:cse_university_app/custom_gpt/constants/constants.dart';
 import 'package:http/http.dart' as http;
 
 class CustomService {
-  static Future<String> getMessagesValue({required String thread}) async {
+  static Future<String> getMessagesValue(
+      {required String thread,
+      required String base_url,
+      required String api_key}) async {
     try {
       var response = await http.get(
-        Uri.parse("$BASE_URL/threads/$thread/messages"),
+        Uri.parse("$base_url/threads/$thread/messages"),
         headers: {
-          "Authorization": "Bearer $API_KEY",
+          "Authorization": "Bearer $api_key",
           "Content-Type": "application/json",
           "OpenAI-Beta": "assistants=v1"
         },
@@ -43,142 +46,17 @@ class CustomService {
     }
   }
 
-  /* static Future<String> getMessagesFirstId({required String thread}) async {
-    try {
-      var response = await http.get(
-        Uri.parse("$BASE_URL/threads/$thread/messages"),
-        headers: {
-          "Authorization": "Bearer $API_KEY",
-          "Content-Type": "application/json",
-          "OpenAI-Beta": "assistants=v1"
-        },
-      );
-
-      Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-      if (jsonResponse.containsKey('error')) {
-        throw Exception(jsonResponse['error']['message']);
-      }
-
-      if (jsonResponse['data'] != null) {
-        //print(jsonResponse["object"]);
-        //print(jsonResponse["first_id"]);
-        //print(jsonResponse["last_id"]);
-        String first_id = jsonResponse["first_id"];
-        List<dynamic> dataSet = jsonResponse["data"].toList();
-        Map<String, dynamic> firstList = dataSet[0];
-        String id = firstList["id"];
-        List<dynamic> content = firstList["content"].toList(); // buraya kadar doğru
-        Map<String, dynamic> firstContent = content[0];
-        Map<String, dynamic> text = firstContent["text"];
-        String value = text["value"];
-
-
-        print(first_id);
-        List<dynamic> data = jsonResponse['data'];
-        List<MessageResponse> chatList = data.map<MessageResponse>((json) => MessageResponse.fromJson(json)).toList();
-        //print(chatList);
-        return first_id;
-      } else {
-        return "";
-      }
-    } catch (e) {
-      print(e);
-      return "$e";
-    }
-  } */
-  /* static Future<String> getMessagesLastId({required String thread}) async {
-    try {
-      var response = await http.get(
-        Uri.parse("$BASE_URL/threads/$thread/messages"),
-        headers: {
-          "Authorization": "Bearer $API_KEY",
-          "Content-Type": "application/json",
-          "OpenAI-Beta": "assistants=v1"
-        },
-      );
-
-      Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-      if (jsonResponse.containsKey('error')) {
-        throw Exception(jsonResponse['error']['message']);
-      }
-
-      if (jsonResponse['data'] != null) {
-        //print(jsonResponse["object"]);
-        //print(jsonResponse["first_id"]);
-        //print(jsonResponse["last_id"]);
-        String last_id = jsonResponse["last_id"];
-        List<dynamic> dataSet = jsonResponse["data"].toList();
-        Map<String, dynamic> firstList = dataSet[0];
-        String id = firstList["id"];
-        List<dynamic> content = firstList["content"].toList(); // buraya kadar doğru
-        Map<String, dynamic> firstContent = content[0];
-        Map<String, dynamic> text = firstContent["text"];
-        String value = text["value"];
-
-
-        print(last_id);
-        List<dynamic> data = jsonResponse['data'];
-        List<MessageResponse> chatList = data.map<MessageResponse>((json) => MessageResponse.fromJson(json)).toList();
-        //print(chatList);
-        return last_id;
-      } else {
-        return "";
-      }
-    } catch (e) {
-      print(e);
-      return "$e";
-    }
-  } */
-  /* static Future<String> getMessagesId({required String thread}) async {
-    try {
-      var response = await http.get(
-        Uri.parse("$BASE_URL/threads/$thread/messages"),
-        headers: {
-          "Authorization": "Bearer $API_KEY",
-          "Content-Type": "application/json",
-          "OpenAI-Beta": "assistants=v1"
-        },
-      );
-
-      Map<String, dynamic> jsonResponse = jsonDecode(response.body);
-      if (jsonResponse.containsKey('error')) {
-        throw Exception(jsonResponse['error']['message']);
-      }
-
-      if (jsonResponse['data'] != null) {
-        //print(jsonResponse["object"]);
-        //print(jsonResponse["first_id"]);
-        //print(jsonResponse["last_id"]);
-        List<dynamic> dataSet = jsonResponse["data"].toList();
-        Map<String, dynamic> firstList = dataSet[0];
-        String id = firstList["id"];
-        List<dynamic> content = firstList["content"].toList(); // buraya kadar doğru
-        Map<String, dynamic> firstContent = content[0];
-        Map<String, dynamic> text = firstContent["text"];
-        String value = text["value"];
-
-
-        print(id);
-        List<dynamic> data = jsonResponse['data'];
-        List<MessageResponse> chatList = data.map<MessageResponse>((json) => MessageResponse.fromJson(json)).toList();
-        //print(chatList);
-        return id;
-      } else {
-        return "";
-      }
-    } catch (e) {
-      print(e);
-      return "$e";
-    }
-  } */
   //send Message fct
   static Future<void> createMessage(
-      {required String message, required String thread}) async {
+      {required String message,
+      required String thread,
+      required String api_key,
+      required String base_url}) async {
     try {
       var response =
-          await http.post(Uri.parse("$BASE_URL/threads/$thread/messages"),
+          await http.post(Uri.parse("$base_url/threads/$thread/messages"),
               headers: {
-                "Authorization": "Bearer $API_KEY",
+                "Authorization": "Bearer $api_key",
                 "Content-Type": "application/json",
                 "OpenAI-Beta": "assistants=v1"
               },
@@ -199,16 +77,19 @@ class CustomService {
   }
 
   // create run
-  static Future<String> createRun({required String thread}) async {
+  static Future<String> createRun(
+      {required String thread,
+      required String api_key,
+      required String assistant_id}) async {
     try {
       var response = await http.post(
           Uri.parse("https://api.openai.com/v1/threads/$thread/runs"),
           headers: {
-            "Authorization": "Bearer $API_KEY",
+            "Authorization": "Bearer $api_key",
             "Content-Type": "application/json",
             "OpenAI-Beta": "assistants=v1"
           },
-          body: jsonEncode({"assistant_id": "$ASSISTANT_ID"}));
+          body: jsonEncode({"assistant_id": "$assistant_id"}));
 
       Map jsonResponse = jsonDecode(response.body);
 
@@ -235,12 +116,12 @@ class CustomService {
   }
 
   // Create Thread
-  static Future<String> createThread() async {
+  static Future<String> createThread({required String api_key}) async {
     try {
       var response = await http.post(
         Uri.parse("https://api.openai.com/v1/threads"),
         headers: {
-          "Authorization": "Bearer $API_KEY",
+          "Authorization": "Bearer $api_key",
           "Content-Type": "application/json",
           "OpenAI-Beta": "assistants=v1"
         },
@@ -262,12 +143,15 @@ class CustomService {
   }
 
   static Future<String> runSteps(
-      {required String thread, required String runId}) async {
+      {required String thread,
+      required String runId,
+      required String base_url,
+      required String api_key}) async {
     try {
       var response = await http.get(
-        Uri.parse("$BASE_URL/threads/$thread/runs/$runId/steps"),
+        Uri.parse("$base_url/threads/$thread/runs/$runId/steps"),
         headers: {
-          "Authorization": "Bearer $API_KEY",
+          "Authorization": "Bearer $api_key",
           "Content-Type": "application/json",
           "OpenAI-Beta": "assistants=v1"
         },

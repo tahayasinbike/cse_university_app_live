@@ -1,3 +1,4 @@
+import 'package:cse_university_app/custom_gpt/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -11,9 +12,13 @@ import 'package:cse_university_app/utils/custom_colors.dart';
 
 class CustomChatScreen extends StatefulWidget {
   String? rol;
+  String? apiKey;
+  String? baseUrl;
   CustomChatScreen({
     Key? key,
     required this.rol,
+    required this.apiKey,
+    required this.baseUrl,
   }) : super(key: key);
 
   @override
@@ -22,18 +27,24 @@ class CustomChatScreen extends StatefulWidget {
 
 class _CustomChatScreenState extends State<CustomChatScreen> {
   late String thread = "";
+  late String asistanId = "";
+  late String API_KEY = "";
+  late String BASE_URL = "";
+  late String ASSISTANT_ID = "";
   //late String apiThread = "";
   late TextEditingController textEditingController;
   late FocusNode focusNode;
   String? message;
   bool isLoading = false;
+  String? chatRol = "";
   @override
   void initState() {
     super.initState();
-    getInfo();
     focusNode = FocusNode();
     textEditingController = TextEditingController();
     print("chat sayfasi rol => ${widget.rol}");
+    chatRol = widget.rol;
+    getInfo();
   }
 
   @override
@@ -44,11 +55,18 @@ class _CustomChatScreenState extends State<CustomChatScreen> {
   }
 
   Future<void> getInfo() async {
-    var apiThread = await CustomService.createThread();
-    //var threadInfo =await CustomService().getThread();
+    API_KEY = await Privacy().getApiKey();
+    BASE_URL = await Privacy().getBaseUrl();
+    ASSISTANT_ID = await Privacy().getAssistantId(level: chatRol ?? "");
+    setState(() {
+      API_KEY = API_KEY;
+      BASE_URL = BASE_URL;
+      ASSISTANT_ID = ASSISTANT_ID;
+    });
+    var apiThread = await CustomService.createThread(api_key: API_KEY);
     setState(() {
       thread = apiThread;
-      // thread = threadInfo?["thread_id"] ?? "";
+
       //print(thread);
     });
   }
@@ -62,10 +80,14 @@ class _CustomChatScreenState extends State<CustomChatScreen> {
     try {
       print(thread);
       await CustomService.createMessage(
-          thread: thread, message: textEditingController.text);
+          api_key: API_KEY,
+          base_url: BASE_URL,
+          thread: thread,
+          message: textEditingController.text);
       textEditingController.clear();
 
-      String runId = await CustomService.createRun(thread: thread);
+      String runId = await CustomService.createRun(
+          thread: thread, api_key: API_KEY, assistant_id: ASSISTANT_ID);
 
       bool isCompleted = false;
       int attempts = 0;
@@ -73,8 +95,8 @@ class _CustomChatScreenState extends State<CustomChatScreen> {
       while (!isCompleted && attempts < maxAttempts) {
         await Future.delayed(
             Duration(seconds: 2)); // Her deneme arasında bekleme süresi
-        String status =
-            await CustomService.runSteps(thread: thread, runId: runId);
+        String status = await CustomService.runSteps(
+            thread: thread, runId: runId, api_key: API_KEY, base_url: BASE_URL);
         isCompleted = status == "completed";
         if (!isCompleted) {
           print("Deneme $attempts: Durum $status");
@@ -83,7 +105,8 @@ class _CustomChatScreenState extends State<CustomChatScreen> {
       }
 
       if (isCompleted) {
-        message = await CustomService.getMessagesValue(thread: thread);
+        message = await CustomService.getMessagesValue(
+            thread: thread, api_key: API_KEY, base_url: BASE_URL);
         setState(() {
           isLoading = false;
           message = message;

@@ -39,15 +39,15 @@ class _MainPageState extends State<MainPage> {
 
   Future<void> getInfo() async {
     var userInfo = await AuthWidgets().getRole(user);
-    var apiInfo = await Privacy().getApiKey();
-    var baseInfo = await Privacy().getBaseUrl();
+    /* var apiInfo = await Privacy().getApiKey();
+    var baseInfo = await Privacy().getBaseUrl(); */
     setState(() {
       rol = userInfo?["rol"];
-      apiKey = apiInfo?["apikey1"];
+      /* apiKey = apiInfo?["apikey1"];
       baseUrl = baseInfo?["baseurl"];
       print(apiKey);
-      print(rol);
-      print(baseUrl);
+      print(baseUrl); */
+      print("main page rol => ${rol}");
     });
   }
 
@@ -80,7 +80,11 @@ class _MainPageState extends State<MainPage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CustomChatScreen(rol: rol),
+                builder: (context) => CustomChatScreen(
+                  rol: rol,
+                  apiKey: apiKey,
+                  baseUrl: baseUrl,
+                ),
               ));
         },
       ),
