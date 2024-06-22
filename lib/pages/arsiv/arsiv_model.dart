@@ -7,9 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
-import 'package:unicons/unicons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// ignore: must_be_immutable
 class ArsivModel extends StatefulWidget {
   String collection;
   String title;
@@ -30,6 +30,7 @@ class _ArsivModelState extends State<ArsivModel> {
   late CollectionReference userRef;
 
   final GlobalKey<ScaffoldState> kiy = GlobalKey();
+  // ignore: unused_field
   late PdfViewerController _pdfViewerController;
   late CollectionReference siteRef;
   @override

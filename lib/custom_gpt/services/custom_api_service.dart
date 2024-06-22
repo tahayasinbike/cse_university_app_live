@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cse_university_app/custom_gpt/constants/constants.dart';
 import 'package:http/http.dart' as http;
 
 class CustomService {
@@ -28,8 +26,7 @@ class CustomService {
       if (jsonResponse['data'] != null && jsonResponse['data'].isNotEmpty) {
         List<dynamic> dataSet = await jsonResponse["data"];
         Map<String, dynamic> firstList = await dataSet[0];
-        List<dynamic> content =
-            await firstList["content"]; // toList() kaldırıldı.
+        List<dynamic> content = await firstList["content"];
         Map<String, dynamic> firstContent = await content[0];
         Map<String, dynamic> text = await firstContent["text"];
         String value = await utf8.decode(text["value"].toString().codeUnits);
@@ -163,7 +160,7 @@ class CustomService {
       }
       List<dynamic> dataSet = await jsonResponse["data"];
       Map<String, dynamic> firstList = await dataSet[0];
-      String getStatus = await firstList["status"]; // toList() kaldırıldı.
+      String getStatus = await firstList["status"];
 
       print(getStatus);
       return getStatus;

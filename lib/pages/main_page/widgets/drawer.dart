@@ -1,5 +1,3 @@
-import 'package:cse_university_app/custom_gpt/screen/custom_chat_screen.dart';
-import 'package:cse_university_app/pages/academic_calendars/acedamic_calendar.dart';
 import 'package:cse_university_app/pages/academic_calendars/model.dart';
 import 'package:cse_university_app/pages/arsiv/arsiv_model.dart';
 import 'package:cse_university_app/pages/duyurular/duyurular.dart';

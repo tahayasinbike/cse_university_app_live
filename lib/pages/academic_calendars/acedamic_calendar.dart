@@ -3,6 +3,7 @@ import 'package:cse_university_app/pages/auth/widgets/auth_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
+// ignore: must_be_immutable
 class AcademicCalendar extends StatefulWidget {
   String? section;
   AcademicCalendar({

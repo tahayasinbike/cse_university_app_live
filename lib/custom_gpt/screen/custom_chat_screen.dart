@@ -10,6 +10,7 @@ import 'package:cse_university_app/utils/custom_colors.dart';
 // önce creat thread id yi alcaz sonra create message yapıp threadı run yapıcaz buraya kadar okey
 // sonra run stepsin statusuna bakıcaz eğer completed ise mesajı getir diycez
 
+// ignore: must_be_immutable
 class CustomChatScreen extends StatefulWidget {
   String? rol;
   String? apiKey;

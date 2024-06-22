@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_options.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cse_university_app/pages/auth/widgets/auth_widgets.dart';
 import 'package:flutter/material.dart';
