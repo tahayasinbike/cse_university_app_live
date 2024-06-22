@@ -10,5 +10,6 @@ class CustomColors {
   static const transparent = Colors.transparent;
   static const gptBack = Color(0xFF343541);
   static const cardColor = Color(0xFF444654);
-  static final  barStyle = TextStyle(color: white, fontSize: 24);
+  static final barStyle = TextStyle(color: white, fontSize: 24);
+  static final ringStyle = TextStyle(color: darkPurple, fontSize: 24);
 }

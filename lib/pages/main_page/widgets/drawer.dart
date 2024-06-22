@@ -8,6 +8,7 @@ import 'package:cse_university_app/pages/iletisim/iletisim.dart';
 import 'package:cse_university_app/pages/main_page/main_page.dart';
 import 'package:cse_university_app/pages/main_page/widgets/list_tile_method.dart';
 import 'package:cse_university_app/pages/ois_blackboard/ois_blackboard_giris.dart';
+import 'package:cse_university_app/pages/ring/ring_page.dart';
 
 import 'package:cse_university_app/utils/custom_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -185,6 +186,14 @@ class AppDrawer extends StatelessWidget {
                       : SizedBox.shrink(),
                 ],
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              ListTileMethod(
+                  context: context,
+                  titlee: "Ring Saatleri",
+                  icon: Icons.bus_alert_outlined,
+                  sayfa: const RingPage()),
               const SizedBox(
                 height: 10,
               ),

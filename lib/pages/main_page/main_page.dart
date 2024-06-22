@@ -9,6 +9,7 @@ import 'package:cse_university_app/pages/main_page/widgets/drawer.dart';
 import 'package:cse_university_app/pages/main_page/widgets/sayilar_slider.dart';
 import 'package:cse_university_app/pages/main_page/widgets/yazi_header.dart';
 import 'package:cse_university_app/pages/ois_blackboard/widgets/beyaz_istun_title.dart';
+import 'package:cse_university_app/pages/ring/ring_service.dart';
 import 'package:cse_university_app/service/auth_service.dart';
 import 'package:cse_university_app/state/state.dart';
 import 'package:cse_university_app/widget_tree.dart';
@@ -35,6 +36,7 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     getInfo();
+    RingService().getSH();
   }
 
   Future<void> getInfo() async {
