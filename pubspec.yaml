@@ -52,6 +52,7 @@ dependencies:
   flutter_linkify: ^6.0.0
   flutter_spinkit: ^5.2.1
   animated_text_kit: ^4.2.2
+  image_network: ^2.5.6
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6

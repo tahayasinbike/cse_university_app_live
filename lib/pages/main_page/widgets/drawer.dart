@@ -1,5 +1,6 @@
 import 'package:cse_university_app/pages/academic_calendars/model.dart';
 import 'package:cse_university_app/pages/arsiv/arsiv_model.dart';
+import 'package:cse_university_app/pages/clubs/club_page.dart';
 import 'package:cse_university_app/pages/duyurular/duyurular.dart';
 import 'package:cse_university_app/pages/haberler/haberler.dart';
 import 'package:cse_university_app/pages/iletisim/iletisim.dart';
@@ -184,6 +185,14 @@ class AppDrawer extends StatelessWidget {
                       : SizedBox.shrink(),
                 ],
               ),
+              SizedBox(
+                height: 10,
+              ),
+              ListTileMethod(
+                  context: context,
+                  titlee: "Kulüpler",
+                  icon: Icons.people_outline_outlined,
+                  sayfa: ClubPage()),
               const SizedBox(
                 height: 10,
               ),

@@ -163,7 +163,6 @@ mixin _$StateManage on _StateManageBase, Store {
   @override
   String toString() {
     return '''
-
 name: ${name},
 obscureText: ${obscureText},
 isLogin: ${isLogin},
